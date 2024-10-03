@@ -16,11 +16,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up JDK 11
+    - name: Set up JDK 17  # Cập nhật phiên bản JDK ở đây
       uses: actions/setup-java@v2
       with:
-        java-version: '11'
-        distribution: 'temurin' 
+        java-version: '17'  # Sử dụng JDK 17
+        distribution: 'temurin'  # Chọn distribution
 
     - name: Build with Maven
       run: mvn clean install
