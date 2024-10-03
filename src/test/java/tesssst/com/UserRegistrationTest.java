@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.After;
@@ -16,12 +16,16 @@ public class UserRegistrationTest {
     @Before
     public void setUp() {
         // Khởi tạo WebDriver chỉ một lần ở đây
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless"); // Chạy ở chế độ không giao diện
+        options.addArguments("--disable-gpu");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+
+        driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.get("http://localhost:8000/register");  // Thay thế bằng URL của form đăng ký
     }
-
     // Kiểm thử đăng ký với dữ liệu hợp lệ
     @Test
     public void testValidRegistration() {
