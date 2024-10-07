@@ -1,6 +1,6 @@
-name: Run JUnit tests
+name: Java CI with Maven
 
-on: 
+on:
   push:
     branches:
       - main
@@ -16,15 +16,26 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    # Cài đặt JDK 17
     - name: Set up JDK 17
-      # Cập nhật phiên bản JDK ở đây
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v3
       with:
-        java-version: '17'  # Sử dụng JDK 17
-        distribution: 'temurin'  # Chọn distribution
+        distribution: 'adopt'
+        java-version: '17'
 
+    # Cài đặt Maven và cache
+    - name: Set up Maven
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'adopt'
+        java-version: '17'
+        
+        cache: maven
+
+    # Build dự án với Maven
     - name: Build with Maven
-      run: mvn clean install
+      run: mvn -B package --file pom.xml
 
-    - name: Run JUnit tests
+    # Chạy kiểm thử với Maven
+    - name: Run tests
       run: mvn test
